@@ -4,25 +4,19 @@
 
 class Bookshelf extends Component {
   static propTypes = {
-    shelf: PropTypes.object.isRequired
-  }
-
-  state = {
-    books: []
-  }
-  componentDidMount() {
-    // console.log(this.props.shelf)
-    this.setState({ books: this.props.shelf.books})
+    books: PropTypes.array.isRequired,
+    heading: PropTypes.string.isRequired
   }
 
   render() {
-    const shelf = this.props.shelf;
+    const books = this.props.books;
+    const heading = this.props.heading
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{shelf.heading}</h2>
+        <h2 className="bookshelf-title">{heading}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {this.state.books.map((book) => (
+            {books.map((book) => (
               <li key={book.title}>
                 <Book shelfBooks={book} />
               </li>
