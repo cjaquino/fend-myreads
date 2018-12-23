@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
+// import escapeRegExp from 'escape-string-regexp';
+// import sortBy from 'sort-by';
 import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 
@@ -20,11 +20,12 @@ class SearchPage extends Component {
     if(query) {
       BooksAPI.search(query).then((books) => {
         this.setState({ query, books })
-      });
+      })
     } else {
       this.clearQuery();
     }
   }
+
 
   clearQuery = (query) => {
     this.setState({ query: '', books: [] })
@@ -32,12 +33,6 @@ class SearchPage extends Component {
 
   render() {
     const { query } = this.state;
-    // let books;
-    let showingBooks;
-    // if(query) {
-    //   const match = new RegExp(escapeRegExp(query), 'i');
-    //   showingBooks =
-    // }
 
     return (
       <div className="search-books">
@@ -69,7 +64,7 @@ class SearchPage extends Component {
           <ol className="books-grid">
             {this.state.books.map((book) => (
               <li key={book.id}>
-                <Book shelfBooks={book} />
+                <Book book={book} />
               </li>
             ))}
           </ol>
