@@ -26,10 +26,10 @@ class Book extends Component {
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumb})` }}></div>
-          <Options />
+          <Options book={this.props.shelfBooks} />
         </div>
         <div className="book-title">{title}</div>
-        {authors.map((author, idx) => (
+        {authors && authors.map((author, idx) => (
           <div key={idx} className="book-authors">{author}</div>
         ))}
       </div>
