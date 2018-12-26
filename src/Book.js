@@ -9,7 +9,10 @@ class Book extends Component {
 
   render() {
     const {title, authors} = this.props.book;
-    const thumb = this.props.book.imageLinks.thumbnail;
+    let thumb = '';
+    if(this.props.book.imageLinks) {
+      thumb = this.props.book.imageLinks.thumbnail;
+    };
 
     return (
       <div className="book">

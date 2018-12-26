@@ -16,11 +16,27 @@ class SearchPage extends Component {
     books: []
   }
 
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      // console.log(books)
+      this.setState({ books });
+    })
+  }
+
   updateQuery = (query) => {
-    query = query.trim();
+    // query = query.trim();
     if(query) {
       BooksAPI.search(query).then((books) => {
-        this.setState({ query, books })
+        //FIXME: add code to update results with shelf books so dropdowns display accurate data when clicked
+        let good_books = [];
+        if(!(query === '' || query === undefined)){
+          good_books = books.filter(function(book) {
+            if(book.imageLinks) {
+              return book;
+            }
+          })
+        }
+        this.setState({ query, books: good_books })
       })
     } else {
       this.clearQuery();
