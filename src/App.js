@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom'
 import './App.css'
 import Bookshelf from './Bookshelf';
 import SearchPage from './SearchPage'
@@ -60,7 +61,7 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <button onClick={() => this.toggleShowSearchPage()}>Add a book</button>
+              <Link to='/search' className='searchButton'>Add a book</Link>
             </div>
           </div>
         )}
@@ -68,5 +69,6 @@ class BooksApp extends React.Component {
     )
   }
 }
+// <button onClick={() => this.toggleShowSearchPage()}>Add a book</button>
 
 export default BooksApp
