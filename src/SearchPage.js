@@ -13,34 +13,39 @@ class SearchPage extends Component {
 
   state = {
     query: '',
-    books: []
+    inShelf: [],
+    results: []
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       // console.log(books)
-      this.setState({ books });
+      this.setState({ inShelf: books });
     })
   }
 
   updateQuery = (query) => {
-    // query = query.trim();
-    if(query) {
-      BooksAPI.search(query).then((books) => {
-        //FIXME: add code to update results with shelf books so dropdowns display accurate data when clicked
-        let good_books = [];
-        if(!(query === '' || query === undefined)){
-          good_books = books.filter(function(book) {
-            if(book.imageLinks) {
-              return book;
-            }
-          })
-        }
-        this.setState({ query, books: good_books })
-      })
-    } else {
-      this.clearQuery();
+    this.setState({ query }, this.doQuery)
+  }
+
+  doQuery() {
+    if(this.state.query === '' || this.state.query === undefined) {
+      return this.setState({ results: [] });
     }
+    BooksAPI.search(this.state.query.trim()).then( books => {
+      if(books.error) {
+          return this.setState({ results: [] });
+      }
+      else {
+          books.forEach(book => {
+              let f_books  = this.state.inShelf.filter(t_book => t_book.id ===  book.id);
+              if(f_books[0]) {
+                  book.shelf = f_books[0].shelf
+              }
+          });
+          return this.setState({ results: books });
+      }
+     });
   }
 
 
@@ -74,12 +79,12 @@ class SearchPage extends Component {
         </div>
         </div>
         <div className="search-books-results">
-        {this.state.books.length <= 0 && (
+        {this.state.results.length <= 0 && (
           <span>No books found!</span>
         )}
-        {this.state.books.length > 0 && (
+        {this.state.results.length > 0 && (
           <ol className="books-grid">
-            {this.state.books.map((book) => (
+            {this.state.results.map((book) => (
               <li key={book.id}>
                 <Book book={book} onChangeHandler={this.props.onChangeHandler} />
               </li>
