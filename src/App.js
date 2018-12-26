@@ -46,25 +46,28 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchPage onChangeHandler={this.onChangeHandler} onReturn={() => this.toggleShowSearchPage()} />
-        ) : (
-          <div className="list-books">
+        <Route exact path='/' render={() =>(
+            <div className="list-books">
             <div className="list-books-title">
-              <h1>MyReads</h1>
+            <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <div>
-                <Bookshelf books={currentlyReading} heading="Currently Reading" onChangeHandler={this.onChangeHandler} />
-                <Bookshelf books={wantToRead} heading="Want to Read" onChangeHandler={this.onChangeHandler} />
-                <Bookshelf books={read} heading="Read" onChangeHandler={this.onChangeHandler} />
-              </div>
+            <div>
+            <Bookshelf books={currentlyReading} heading="Currently Reading" onChangeHandler={this.onChangeHandler} />
+            <Bookshelf books={wantToRead} heading="Want to Read" onChangeHandler={this.onChangeHandler} />
+            <Bookshelf books={read} heading="Read" onChangeHandler={this.onChangeHandler} />
+            </div>
             </div>
             <div className="open-search">
-              <Link to='/search' className='searchButton'>Add a book</Link>
+            <Link to='/search' className='searchButton'>Add a book</Link>
             </div>
-          </div>
-        )}
+            </div>
+          )}
+        />
+        <Route exact path='/search' render={() => (
+            <SearchPage onChangeHandler={this.onChangeHandler} onReturn={() => this.toggleShowSearchPage()} />
+          )}
+        />
       </div>
     )
   }
