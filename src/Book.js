@@ -1,27 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as BooksAPI from  './BooksAPI';
-
-// Book = {
-//   title: '',
-//   authors: ['',''],
-//   imageLinks: {
-//     smallThumbnail: '',
-//     thumbnail: ''
-//   }
-// }
-
 
 class Book extends Component {
   static propTypes = {
-    book: PropTypes.object.isRequired
-  }
-
-  onChangeHandler = () => {
-    let book = this.props.book;
-    let selectBox = document.getElementById(book.id);
-    let shelf = selectBox.options[selectBox.selectedIndex].value;
-    BooksAPI.update(book, shelf).then((book) => console.log(book));
+    book: PropTypes.object.isRequired,
+    onChangeHandler: PropTypes.func.isRequired
   }
 
   render() {
@@ -33,7 +16,7 @@ class Book extends Component {
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumb})` }}></div>
           <div className="book-shelf-changer">
-            <select id={this.props.book.id} value={this.props.book.shelf} onChange={() => this.onChangeHandler()}>
+            <select id={this.props.book.id} value={this.props.book.shelf || "none"} onChange={(e) => this.props.onChangeHandler(this.props.book,e.target.value)}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -50,6 +33,5 @@ class Book extends Component {
     )
   }
 }
-// <Options book={this.props.shelfBooks} />
 
 export default Book;

@@ -7,7 +7,8 @@ import * as BooksAPI from './BooksAPI'
 
 class SearchPage extends Component {
   static propTypes = {
-    onReturn: PropTypes.func.isRequired
+    onReturn: PropTypes.func.isRequired,
+    onChangeHandler: PropTypes.func.isRequired
   }
 
   state = {
@@ -64,7 +65,7 @@ class SearchPage extends Component {
           <ol className="books-grid">
             {this.state.books.map((book) => (
               <li key={book.id}>
-                <Book book={book} />
+                <Book book={book} onChangeHandler={this.props.onChangeHandler} />
               </li>
             ))}
           </ol>

@@ -14,14 +14,24 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
      books: [],
-    showSearchPage: false
+    showSearchPage: false,
+    test: false
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      // console.log(books);
+      // console.log(books)
       this.setState({ books });
     })
+  }
+
+  onChangeHandler = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(shelves => {
+      book.shelf = shelf;
+      this.setState(state => ({
+        books: state.books.filter(t_book => t_book.id !== book.id).concat([book])
+      }));
+    });
   }
 
   toggleShowSearchPage() {
@@ -36,7 +46,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchPage onReturn={() => this.toggleShowSearchPage()} />
+          <SearchPage onChangeHandler={this.onChangeHandler} onReturn={() => this.toggleShowSearchPage()} />
         ) : (
           <div className="list-books">
             <div className="list-books-title">
@@ -44,9 +54,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <Bookshelf books={currentlyReading} heading="Currently Reading" />
-                <Bookshelf books={wantToRead} heading="Want to Read" />
-                <Bookshelf books={read} heading="Read" />
+                <Bookshelf books={currentlyReading} heading="Currently Reading" onChangeHandler={this.onChangeHandler} />
+                <Bookshelf books={wantToRead} heading="Want to Read" onChangeHandler={this.onChangeHandler} />
+                <Bookshelf books={read} heading="Read" onChangeHandler={this.onChangeHandler} />
               </div>
             </div>
             <div className="open-search">
