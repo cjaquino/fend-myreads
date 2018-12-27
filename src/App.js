@@ -48,19 +48,19 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path='/' render={() =>(
             <div className="list-books">
-            <div className="list-books-title">
-            <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-            <div>
-            <Bookshelf books={currentlyReading} heading="Currently Reading" onChangeHandler={this.onChangeHandler} />
-            <Bookshelf books={wantToRead} heading="Want to Read" onChangeHandler={this.onChangeHandler} />
-            <Bookshelf books={read} heading="Read" onChangeHandler={this.onChangeHandler} />
-            </div>
-            </div>
-            <div className="open-search">
-            <Link to='/search' className='searchButton'>Add a book</Link>
-            </div>
+              <div className="list-books-title">
+              <h1>MyReads</h1>
+              </div>
+              <div className="list-books-content">
+                <div>
+                  <Bookshelf books={currentlyReading} heading="Currently Reading" onChangeHandler={this.onChangeHandler} />
+                  <Bookshelf books={wantToRead} heading="Want to Read" onChangeHandler={this.onChangeHandler} />
+                  <Bookshelf books={read} heading="Read" onChangeHandler={this.onChangeHandler} />
+                </div>
+              </div>
+              <div className="open-search">
+              <Link to='/search' className='searchButton'>Add a book</Link>
+              </div>
             </div>
           )}
         />
